@@ -1,5 +1,5 @@
 import { Component,OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm  ,FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs/public_api';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
@@ -10,9 +10,10 @@ import { IPropertyBase } from 'src/app/model/ipropertybase';
   styleUrls: ['./add-property.component.css']
 })
 export class AddPropertyComponent implements OnInit{
-  @ViewChild('Form') addPropertyForm!: NgForm;
+  //@ViewChild('Form') addPropertyForm!: NgForm;
   @ViewChild('formTabs') formTabs!: TabsetComponent;
-constructor(private router:Router){}
+  addPropertyForm!: FormGroup;
+
 propertyTypes: Array<string> = ['House', 'Apartment', 'Duplex']
   furnishTypes: Array<string> = ['Fully', 'Semi', 'Unfurnished']
 
@@ -28,9 +29,26 @@ propertyTypes: Array<string> = ['House', 'Apartment', 'Duplex']
     City:null,
     RTM:null
   };
-ngOnInit(): void {
+
+  constructor(private fb: FormBuilder,private router:Router){}
   
+ngOnInit(): void {
+  this.CreateAddPropertyForm();
 }
+CreateAddPropertyForm() {
+  this.addPropertyForm = this.fb.group({
+    BasicInfo: this.fb.group({
+      SellRent: [null, Validators.required],
+      PType: [null, Validators.required],
+      Name: [null, Validators.required]
+    }),
+    PriceInfo: this.fb.group({
+      Price: [null, Validators.required],
+      BuiltArea: [null, Validators.required]
+  })
+  });
+}
+
 onBack(){
   this.router.navigate(['/']);
 }

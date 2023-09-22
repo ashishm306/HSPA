@@ -1,4 +1,11 @@
-
+.card-body h1 {
+    font-family: fantasy;
+    color: #0069d9;
+  }
+  .font-highlight {
+    font-style: italic;
+    color: red;
+  }
 .card-img-wrapper{
     overflow: hidden;
     position: relative;
@@ -10,6 +17,7 @@
     height: 250px;
     opacity: 0.5;
 }
+
 .cardimg{
     transform: scale(1,1);
     transition-duration:500ms;
