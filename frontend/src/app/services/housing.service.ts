@@ -21,6 +21,15 @@ export class HousingService {
         //   }
         // }
         const propertiesArray : Array<IPropertyBase> =[];
+        const localProperties = JSON.parse(localStorage.getItem('newProp')||'{}');
+
+      if (localProperties) {
+        for (const id in localProperties) {
+          if (localProperties.hasOwnProperty(id) && localProperties[id].SellRent === SellRent) {
+            propertiesArray.push(localProperties[id]);
+          }
+        }
+      }
         const jsonData = JSON.stringify(data)
         const tmp: Array<IPropertyBase> = JSON.parse(jsonData);
         for(const id in tmp){
@@ -32,6 +41,25 @@ export class HousingService {
     );
   }
   addProperty(property: Property) {
-    localStorage.setItem('newProp', JSON.stringify(property));
+    let newProp = [property];
+
+    // Add new property in array if newProp alreay exists in local storage
+    if (localStorage.getItem('newProp')) {
+      newProp = [property,
+                  ...JSON.parse((localStorage.getItem('newProp')|| '{}'))];
+    }
+
+    localStorage.setItem('newProp', JSON.stringify(newProp));
+  
   }
+  newPropID() {
+    if (localStorage.getItem('PID')) {
+      localStorage.setItem('PID', String(+(localStorage.getItem('PID')||'{}') + 1));
+      return +(localStorage.getItem('PID')||'{}');
+    } else {
+      localStorage.setItem('PID', '101');
+      return 101;
+    }
+  }
+
 }
