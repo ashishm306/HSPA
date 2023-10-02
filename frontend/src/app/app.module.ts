@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {PropertyDetailResolverService} from './property/property-detail/property-detail-resolver.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PropertyCardComponent } from './property/property-card/property-card.component';
@@ -41,7 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot()
   ],
-  providers: [HousingService],
+  providers: [HousingService,PropertyDetailResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
